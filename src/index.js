@@ -9,8 +9,30 @@ app.use(express.json());
 // Put your implementation here
 // If necessary to add imports, please do so in the section above
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.post('/users', (req, res) => {
+  res.json({
+    "id": "mdt26",
+    "name": "Matthew Tohan",
+    "email": "mdt26@njit.edu"
+  });
+  console.log(req.body);
+});
+
+
+app.get('/users/mdt26', (req, res) => {
+    res.send('Requesting');
+});
+
+app.put('/users/mdt26', (req, res) => {
+  res.json({
+    "id": "mdt26",
+    "name": "Matthew Tohon",
+    "email": "mdt26@njit.edu"
+  });
+});
+
+app.delete('/user/mdt26', (req,res) => {
+  res.sent('Deleting');
 });
 
 // Do not touch the code below this comment
