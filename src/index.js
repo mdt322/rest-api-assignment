@@ -20,7 +20,7 @@ app.post('/users', (req, res) => {
 //    let user = { "id": uuidv4(), ...req.body};
     let user = { "id": "placeholder", ...req.body};
     users.push(user);
-    res.status(201).send({ user });
+    res.status(201).send(user);
   }
 });
 
@@ -28,10 +28,10 @@ app.post('/users', (req, res) => {
 app.get('/users/:id', (req, res) => {
   let user = users.find(u => u.id === req.params.id);
   if (!user){
-    res.status(404).send('404: Not Found. ID not in database.');
+    res.status(404);
   }
   else{
-    res.status(200).send(user)
+    res.status(200).send(user);
   }
 });
 
@@ -39,10 +39,10 @@ app.get('/users/:id', (req, res) => {
 app.put('/users/:id', (req, res) => {
   let u_index = users.findIndex(u => u.id === req.params.id);
   if (!u_index){
-    res.status(404).send('404: Not Found. ID not in database.');
+    res.status(404);
   }
   else if (!req.body.name || req.body.email){
-    res.status(400).send('400: Bad request. Needs an entry for name and email.');
+    res.status(400);
   }
   else {
     users[u_index].name = req.body.name;
@@ -55,11 +55,11 @@ app.put('/users/:id', (req, res) => {
 app.delete('/user/:id', (req,res) => {
     let u_index = users.findIndex(u => u.id === req.params.id);
   if (!u_index){
-    res.status(404).send('404: Not Found. ID not in database.');
+    res.status(404);
   }
   else{
     users.splice(u_index, 1);
-    res.status(204).send('204: Entry removed.')
+    res.status(204);
   }
 });
 
