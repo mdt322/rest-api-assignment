@@ -8,17 +8,17 @@ app.use(express.json());
 // **************************************************************
 // Put your implementation here
 // If necessary to add imports, please do so in the section above
-//const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const users = [];
 
 //Post Implementation
 app.post('/users', (req, res) => {
   if (!req.body.name || !req.body.email){
-    res.status(400);
+    res.status(400).send('400: Bad Request');
   }
   else{
-//    let user = { "id": uuidv4(), ...req.body};
-    let user = { "id": "placeholder", "name": req.body.name, "email": req.body.email };
+    let user = { "id": uuidv4(), "name": req.body.name, "email": req.body.email };
+//    let user = { "id": "placeholder", "name": req.body.name, "email": req.body.email };
     users.push(user);
     res.status(201).send(user);
   }
@@ -28,7 +28,7 @@ app.post('/users', (req, res) => {
 app.get('/users/:id', (req, res) => {
   let user = users.find(u => u.id === req.params.id);
   if (!user){
-    res.status(404);
+    res.status(404).send('404: Not Found');
   }
   else{
     res.status(200).send(user);
@@ -38,11 +38,11 @@ app.get('/users/:id', (req, res) => {
 //PUT Implementation
 app.put('/users/:id', (req, res) => {
   let u_index = users.findIndex(u => u.id === req.params.id);
-  if (!u_index){
-    res.status(404);
+  if (u_index == -1){
+    res.status(404).send('404: Not Found');
   }
   else if (!req.body.name || !req.body.email){
-    res.status(400);
+    res.status(400).send('400: Bad Request');
   }
   else {
     users[u_index].name = req.body.name;
@@ -54,12 +54,12 @@ app.put('/users/:id', (req, res) => {
 //DELETE Implementation
 app.delete('/users/:id', (req,res) => {
   let u_index = users.findIndex(u => u.id === req.params.id);
-  if (!u_index){
-    res.status(404);
+  if (u_index == -1){
+    res.status(404).send('404: Not Found');
   }
   else{
     users.splice(u_index, 1);
-    res.status(204);
+    res.status(204).send('204: No Content');
   }
 });
 
