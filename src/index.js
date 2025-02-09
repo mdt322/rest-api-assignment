@@ -18,7 +18,7 @@ app.post('/users', (req, res) => {
   }
   else{
 //    let user = { "id": uuidv4(), ...req.body};
-    let user = { "id": "placeholder", ...req.body};
+    let user = { "id": "placeholder", "name": req.body.name, "email": req.body.email };
     users.push(user);
     res.status(201).send(user);
   }
@@ -41,19 +41,19 @@ app.put('/users/:id', (req, res) => {
   if (!u_index){
     res.status(404);
   }
-  else if (!req.body.name || req.body.email){
+  else if (!req.body.name || !req.body.email){
     res.status(400);
   }
   else {
     users[u_index].name = req.body.name;
-    users[u_index].name = req.body.email;
+    users[u_index].email = req.body.email;
     res.status(200).send(users[u_index]);
   }
 });
 
 //DELETE Implementation
-app.delete('/user/:id', (req,res) => {
-    let u_index = users.findIndex(u => u.id === req.params.id);
+app.delete('/users/:id', (req,res) => {
+  let u_index = users.findIndex(u => u.id === req.params.id);
   if (!u_index){
     res.status(404);
   }
