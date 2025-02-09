@@ -8,31 +8,58 @@ app.use(express.json());
 // **************************************************************
 // Put your implementation here
 // If necessary to add imports, please do so in the section above
+const { v4: uuidv4 } = require('uuid');
+const users = [];
 
+//Post Implementation
 app.post('/users', (req, res) => {
-  res.json({
-    "id": "mdt26",
-    "name": "Matthew Tohan",
-    "email": "mdt26@njit.edu"
-  });
-  console.log(req.body);
+  if (!req.body.name || !req.body.name){
+    res.status(400).send('400: Bad request. Needs an entry for name and email.');
+  }
+  else{
+    let user = { "id": uuidv4(), ...req.body};
+    users.push(user);
+    res.status(201).json({ user });
+  }
 });
 
-
-app.get('/users/mdt26', (req, res) => {
-    res.send('Requesting');
+//GET Implementation
+app.get('/users/:id', (req, res) => {
+  let user = users.find(u => u.id === req.params.id);
+  if (!user){
+    res.status(404).send('404: Not Found. ID not in database.');
+  }
+  else{
+    res.status(200).json(user)
+  }
 });
 
-app.put('/users/mdt26', (req, res) => {
-  res.json({
-    "id": "mdt26",
-    "name": "Matthew Tohon",
-    "email": "mdt26@njit.edu"
-  });
+//PUT Implementation
+app.put('/users/:id', (req, res) => {
+  let u_index = users.findIndex(u => u.id === req.params.id);
+  if (!u_index){
+    res.status(404).send('404: Not Found. ID not in database.');
+  }
+  else if (!req.body.name || req.body.email){
+    res.status(400).send('400: Bad request. Needs an entry for name and email.');
+  }
+  else {
+    users[u_index].name = req.body.name;
+    users[u_index].name = req.body.email;
+    res.status(200).json(users[u_index]);
+  }
 });
 
-app.delete('/user/mdt26', (req,res) => {
-  res.sent('Deleting');
+//DELETE Implementation
+app.delete('/user/:id', (req,res) => {
+    let u_index = users.findIndex(u => u.id === req.params.id);
+  if (!u_index){
+    res.status(404).send('404: Not Found. ID not in database.');
+  }
+  else{
+    users.splice(u_index, 1);
+    res.status(204).send('204: Entry removed.')
+  }
 });
 
 // Do not touch the code below this comment
