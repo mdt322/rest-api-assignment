@@ -20,7 +20,7 @@ app.post('/users', (req, res) => {
 //    let user = { "id": uuidv4(), ...req.body};
     let user = { "id": "placeholder", ...req.body};
     users.push(user);
-    res.status(201).json({ user });
+    res.status(201).send({ user });
   }
 });
 
@@ -31,7 +31,7 @@ app.get('/users/:id', (req, res) => {
     res.status(404).send('404: Not Found. ID not in database.');
   }
   else{
-    res.status(200).json(user)
+    res.status(200).send(user)
   }
 });
 
@@ -47,7 +47,7 @@ app.put('/users/:id', (req, res) => {
   else {
     users[u_index].name = req.body.name;
     users[u_index].name = req.body.email;
-    res.status(200).json(users[u_index]);
+    res.status(200).send(users[u_index]);
   }
 });
 
