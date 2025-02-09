@@ -14,7 +14,7 @@ const users = [];
 //Post Implementation
 app.post('/users', (req, res) => {
   if (!req.body.name || !req.body.email){
-    res.status(400).send('400: Bad request. Needs an entry for name and email.');
+    res.status(400);
   }
   else{
 //    let user = { "id": uuidv4(), ...req.body};
