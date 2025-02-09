@@ -1,4 +1,5 @@
 const express = require('express');
+const { v4: uuidv4 } = require('uuid'); //Importing uuid module
 const app = express();
 const port = 3000;
 
@@ -8,7 +9,6 @@ app.use(express.json());
 // **************************************************************
 // Put your implementation here
 // If necessary to add imports, please do so in the section above
-const { v4: uuidv4 } = require('uuid');
 const users = [];
 
 //Post Implementation
