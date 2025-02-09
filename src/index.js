@@ -8,7 +8,7 @@ app.use(express.json());
 // **************************************************************
 // Put your implementation here
 // If necessary to add imports, please do so in the section above
-const { v4: uuidv4 } = require('uuid');
+//const { v4: uuidv4 } = require('uuid');
 const users = [];
 
 //Post Implementation
@@ -17,7 +17,8 @@ app.post('/users', (req, res) => {
     res.status(400).send('400: Bad request. Needs an entry for name and email.');
   }
   else{
-    let user = { "id": uuidv4(), ...req.body};
+//    let user = { "id": uuidv4(), ...req.body};
+    let user = { "id": "placeholder", ...req.body};
     users.push(user);
     res.status(201).json({ user });
   }
